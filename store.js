@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-
 import authReducer from './reducers/authReducer';
+import booksReducer from './reducers/booksReducer'; // Import the new reducer
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  // Add other reducers if needed
+  books: booksReducer, // Add the new reducer to the combineReducers function
+  // Add other reducers when needed
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
