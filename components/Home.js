@@ -1,34 +1,32 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks } from '../actions/booksActions';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import BookItem from './BookItem';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const books = useSelector((state) => state.books.books);
-  const loading = useSelector((state) => state.books.loading);
-  const error = useSelector((state) => state.books.error);
+  const [searchTerm, setSearchTerm] = useState('');
+  const books = useSelector((state) => state.books);
 
-  useEffect(() => {
-    dispatch(fetchBooks(1)); // Fetch books on component mount
-  }, [dispatch]);
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
-  if (loading) {
-    return <div>Loading books...</div>;
-  }
+  const filteredBooks = books.filter((book) => {
+    const { title, author, genre } = book;
+    const searchLower = searchTerm.toLowerCase();
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    return (
+      title.toLowerCase().includes(searchLower) ||
+      author.toLowerCase().includes(searchLower) ||
+      genre.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <div>
-      <h2>Book Catalog</h2>
-      <div className="book-list">
-        {books.map((book) => (
-          <BookItem key={book.id} book={book} />
-        ))}
-      </div>
+      <input type="text" placeholder="Search books" value={searchTerm} onChange={handleSearch} />
+      {filteredBooks.map((book) => (
+        <BookItem key={book.id} book={book} />
+      ))}
     </div>
   );
 };
