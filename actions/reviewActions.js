@@ -1,41 +1,29 @@
-// Add Review Action
-export const addReview = (bookId, content) => {
-  // Add your logic for adding a review to the backend or the desired data store
-  // You can dispatch an action to update the Redux store with the new review
+import { ADD_REVIEW, EDIT_REVIEW, DELETE_REVIEW } from './types';
 
-  // Example code:
+export const addReview = (userId, bookId, reviewText) => {
   return {
-    type: 'ADD_REVIEW',
+    type: ADD_REVIEW,
     payload: {
+      userId,
       bookId,
-      content,
+      reviewText,
     },
   };
 };
 
-// Update Review Action
-export const updateReview = (reviewId, content) => {
-  // Add your logic for updating a review in the backend or the desired data store
-  // You can dispatch an action to update the Redux store with the updated review
-
-  // Example code:
+export const editReview = (reviewId, reviewText) => {
   return {
-    type: 'UPDATE_REVIEW',
+    type: EDIT_REVIEW,
     payload: {
       reviewId,
-      content,
+      reviewText,
     },
   };
 };
 
-// Delete Review Action
 export const deleteReview = (reviewId) => {
-  // Add your logic for deleting a review from the backend or the desired data store
-  // You can dispatch an action to update the Redux store by removing the deleted review
-
-  // Example code:
   return {
-    type: 'DELETE_REVIEW',
+    type: DELETE_REVIEW,
     payload: {
       reviewId,
     },
