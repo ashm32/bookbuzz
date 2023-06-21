@@ -5,7 +5,9 @@ import './Navbar.css'; // Import the CSS file for styling
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="logo">
+       <Link to="/">
+          <img src="/images/bookbuzzLogo" alt="Logo" />
+        </Link>
         <Link to="/">My Book Catalog</Link> {/* Update the link destination as needed */}
       </div>
       <ul className="nav-links">
