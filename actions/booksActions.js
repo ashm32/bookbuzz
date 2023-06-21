@@ -1,50 +1,41 @@
-import axios from 'axios';
-
 // Action Types
-export const FETCH_BOOKS_REQUEST = 'FETCH_BOOKS_REQUEST';
-export const FETCH_BOOKS_SUCCESS = 'FETCH_BOOKS_SUCCESS';
-export const FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE';
+export const FETCH_BOOK_DETAILS_REQUEST = 'FETCH_BOOK_DETAILS_REQUEST';
+export const FETCH_BOOK_DETAILS_SUCCESS = 'FETCH_BOOK_DETAILS_SUCCESS';
+export const FETCH_BOOK_DETAILS_FAILURE = 'FETCH_BOOK_DETAILS_FAILURE';
 
 // Action Creators
-export const fetchBooksRequest = () => ({
-  type: FETCH_BOOKS_REQUEST,
+export const fetchBookDetailsRequest = () => ({
+  type: FETCH_BOOK_DETAILS_REQUEST,
 });
 
-export const fetchBooksSuccess = (books) => ({
-  type: FETCH_BOOKS_SUCCESS,
-  payload: books,
+export const fetchBookDetailsSuccess = (bookDetails) => ({
+  type: FETCH_BOOK_DETAILS_SUCCESS,
+  payload: bookDetails,
 });
 
-export const fetchBooksFailure = (error) => ({
-  type: FETCH_BOOKS_FAILURE,
+export const fetchBookDetailsFailure = (error) => ({
+  type: FETCH_BOOK_DETAILS_FAILURE,
   payload: error,
 });
 
-// Thunk to fetch books
-export const fetchBooks = (page) => {
+// Thunk to fetch book details
+export const fetchBookDetails = (bookId) => {
   return (dispatch) => {
-    dispatch(fetchBooksRequest());
-    const PAGE_SIZE = 10; // Number of books per page
+    dispatch(fetchBookDetailsRequest());
 
     axios
-      .get(
-        `https://openlibrary.org/search.json?q=fantasy&page=${page}&limit=${PAGE_SIZE}`
-      )
+      .get(`https://openlibrary.org/works/${bookId}.json`)
       .then((response) => {
-        const booksData = response.data.docs;
+        const bookDetails = {
+          description: response.data.description || 'No description available.',
+          averageRating: response.data.average_rating || 'N/A',
+          reviews: response.data.reviews || [],
+        };
 
-        const books = booksData.map((book) => ({
-          id: book.key,
-          title: book.title,
-          author: book.author_name ? book.author_name[0] : 'Unknown',
-          rating: book.rating ? book.rating.average.toFixed(2) : 'N/A',
-          cover: `http://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`,
-        }));
-
-        dispatch(fetchBooksSuccess(books));
+        dispatch(fetchBookDetailsSuccess(bookDetails));
       })
       .catch((error) => {
-        dispatch(fetchBooksFailure(error.message));
+        dispatch(fetchBookDetailsFailure(error.message));
       });
   };
 };
