@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import BookItem from './BookItem';
+import './Home.css'; // Import the CSS file for styling
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,11 +23,13 @@ const Home = () => {
   });
 
   return (
-    <div>
+    <div className="home-container">
       <input type="text" placeholder="Search books" value={searchTerm} onChange={handleSearch} />
-      {filteredBooks.map((book) => (
-        <BookItem key={book.id} book={book} />
-      ))}
+      <div className="book-list">
+        {filteredBooks.map((book) => (
+          <BookItem key={book.id} book={book} />
+        ))}
+      </div>
     </div>
   );
 };
