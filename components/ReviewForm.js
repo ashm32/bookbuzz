@@ -1,38 +1,49 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addReview, updateReview } from '../actions/reviewActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview, editReview } from '../actions/reviewActions';
 
-const ReviewForm = ({ bookId, review, onSubmit }) => {
-  const [content, setContent] = useState(review ? review.content : '');
-
+const ReviewForm = ({ bookId }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const reviews = useSelector((state) => state.reviews.reviews);
+
+  const [reviewText, setReviewText] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (review) {
-      dispatch(updateReview(review.id, content));
-    } else {
-      dispatch(addReview(bookId, content));
+    if (reviewText.trim() === '') {
+      return;
     }
 
-    if (onSubmit) {
-      onSubmit();
-    }
+    if (user) {
+      const existingReview = reviews.find((review) => review.bookId === bookId && review.userId === user.id);
 
-    setContent('');
+      if (existingReview) {
+        dispatch(editReview(existingReview.id, reviewText));
+      } else {
+        dispatch(addReview(user.id, bookId, reviewText));
+      }
+
+      setReviewText('');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Write your review..."
-        required
-      ></textarea>
-      <button type="submit">{review ? 'Update Review' : 'Add Review'}</button>
-    </form>
+    <div>
+      {user ? (
+        <form onSubmit={handleSubmit}>
+          <textarea
+            placeholder="Write your review..."
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+          ></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      ) : (
+        <p>Please log in to add or edit reviews.</p>
+      )}
+    </div>
   );
 };
 
