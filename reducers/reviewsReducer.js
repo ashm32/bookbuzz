@@ -1,51 +1,37 @@
-//= TODO
+import { ADD_REVIEW, EDIT_REVIEW, DELETE_REVIEW } from '../actions/types';
 
 const initialState = {
   reviews: [],
 };
 
-const reviewsReducer = (state = initialState, action) => {
+const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_REVIEW':
-      // Add logic to handle adding a review to the state
-      // You can update the state by adding the new review to the reviews array
-
-
+    case ADD_REVIEW:
       return {
         ...state,
         reviews: [
           ...state.reviews,
           {
-            id: Math.random().toString(),
+            id: Date.now(), // Generate a unique ID (you can use a different approach if needed)
+            userId: action.payload.userId,
             bookId: action.payload.bookId,
-            content: action.payload.content,
+            reviewText: action.payload.reviewText,
           },
         ],
       };
 
-    case 'UPDATE_REVIEW':
-      // Add logic to handle updating a review in the state
-      // You can update the state by finding the review by ID and updating its content
-
+    case EDIT_REVIEW:
       return {
         ...state,
         reviews: state.reviews.map((review) =>
-          review.id === action.payload.reviewId
-            ? { ...review, content: action.payload.content }
-            : review
+          review.id === action.payload.reviewId ? { ...review, reviewText: action.payload.reviewText } : review
         ),
       };
 
-    case 'DELETE_REVIEW':
-      // Add logic to handle deleting a review from the state
-      // You can update the state by filtering out the review with the matching ID
-
-
+    case DELETE_REVIEW:
       return {
         ...state,
-        reviews: state.reviews.filter(
-          (review) => review.id !== action.payload.reviewId
-        ),
+        reviews: state.reviews.filter((review) => review.id !== action.payload.reviewId),
       };
 
     default:
@@ -53,4 +39,4 @@ const reviewsReducer = (state = initialState, action) => {
   }
 };
 
-export default reviewsReducer;
+export default reviewReducer;
