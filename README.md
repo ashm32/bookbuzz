@@ -24,15 +24,20 @@ BOOKBUZZ fulfills the following requirements:
 To get started with the project, follow these steps:
 
 1. Clone the repository:
-
+   
+```
 git clone https://github.com/your-username/project-name.git
 ```
+
 Navigate to the project directory:
 
+```
 cd project-name
 ```
+
 Install the necessary dependencies:
 
+```
 npm install
 ```
 
@@ -40,6 +45,7 @@ npm install
 
 To start the development server and run the project, use the following command:
 
+```
 npm start
 ```
 This will start the application, and it can be accessed at http://localhost:3000.
