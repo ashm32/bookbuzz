@@ -25,8 +25,8 @@ To get started with the project, follow these steps:
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/project-name.git
+```
+git clone https://github.com/your-username/project-name.git
 Navigate to the project directory:
 ```
 cd project-name
@@ -48,17 +48,17 @@ This will start the application, and it can be accessed at http://localhost:3000
 
 The project has the following dependencies:
 
-React
-React Router DOM
-Redux
-Redux Thunk
-Axios
-Netlify (for deployment)
+React,
+React Router DOM,
+Redux,
+Redux Thunk,
+Axios,
+Netlify (for deployment).
 
 
 ## Contributing
 
-Contributions are welcome! If you find any issues or have suggestions, please contact
+Contributions are welcome! If you find any issues or have suggestions, please reach out!
 
 ## License
 
