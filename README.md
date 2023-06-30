@@ -26,16 +26,16 @@ To get started with the project, follow these steps:
 1. Clone the repository:
    
 ```
-git clone https://github.com/your-username/project-name.git
+git clone https://github.com/your-username/bookbuzz-main.git
 ```
 
 Navigate to the project directory:
 
 ```
-cd project-name
+cd bookbuzz-main
 ```
 
-Install the necessary dependencies:
+Install the necessary dependencies (node_modules etc):
 
 ```
 npm install
